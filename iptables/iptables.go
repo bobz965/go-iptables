@@ -236,6 +236,12 @@ func (ipt *IPTables) Delete(table, chain string, rulespec ...string) error {
 	return ipt.run(cmd...)
 }
 
+// Delete removes rule in specified table/chain by line numbers
+func (ipt *IPTables) DeleteById(table, chain string, id int) error {
+	cmd := []string{"-t", table, "-D", chain, strconv.Itoa(id)}
+	return ipt.run(cmd...)
+}
+
 func (ipt *IPTables) DeleteIfExists(table, chain string, rulespec ...string) error {
 	exists, err := ipt.Exists(table, chain, rulespec...)
 	if err == nil && exists {
